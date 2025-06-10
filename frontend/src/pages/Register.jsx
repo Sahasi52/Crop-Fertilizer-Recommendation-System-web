@@ -19,20 +19,20 @@ const Register = () => {
     let error = {};
 
     if (!values.username) {
-      error.username = "Name is required.";
+      error.username = "নাম আবশ্যক|";
     }
 
     if (!values.email) {
-      error.email = "Email is required.";
+      error.email = "ইমেল প্রয়োজন|";
     } else if (!email_pattern.test(values.email)) {
-      error.email = "Invalid email";
+      error.email = "অবৈধ ইমেল!";
     }
 
     if (!values.password) {
-      error.password = "Password is required.";
+      error.password = "পাসওয়ার্ড প্রয়োজন|";
     } else if (!password_pattern.test(values.password)) {
       error.password =
-        "Password must contain 1 uppercase, 1 lowercase, 1 digit, and be at least 8 characters.";
+        "পাসওয়ার্ডে ১টি বড় হাতের, ১টি ছোট হাতের, ১টি সংখ্যা এবং কমপক্ষে ৮টি অক্ষর থাকতে হবে|";
     }
     return error;
   };
@@ -85,18 +85,18 @@ const Register = () => {
 
       <div className="fixed inset-0 flex justify-center items-start mt-[17vh]">
         <div className="shadow-2xl px-8 py-5 w-96 bg-green-500/50 backdrop-blur-[20px] rounded-[10px] border-2">
-          <h2 className="text-3xl font-bold mb-4 text-center">Register</h2>
+          <h2 className="text-3xl font-bold mb-4 text-center">নিবন্ধন করুন</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="username"
                 className="block text-black font-medium"
               >
-                Username
+                ব্যবহারকারীর নাম
               </label>
               <input
                 type="text"
-                placeholder="Enter username"
+                placeholder="ব্যবহারকারীর নাম লিখুন"
                 className="w-full px-3 py-2 border bg-white rounded"
                 name="username"
                 onChange={handleChanges}
@@ -109,11 +109,11 @@ const Register = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="block text-black font-medium">
-                Email
+                ইমেইল
               </label>
               <input
                 type="email"
-                placeholder="Enter email"
+                placeholder="ইমেইল লিখুন"
                 className="w-full px-3 py-2 border bg-white rounded"
                 name="email"
                 onChange={handleChanges}
@@ -129,11 +129,11 @@ const Register = () => {
                 htmlFor="password"
                 className="block text-black font-medium"
               >
-                Password
+                পাসওয়ার্ড
               </label>
               <input
                 type="password"
-                placeholder="Enter password"
+                placeholder="পাসওয়ার্ড লিখুন"
                 className="w-full px-3 py-2 border bg-white rounded"
                 name="password"
                 onChange={handleChanges}
@@ -144,14 +144,14 @@ const Register = () => {
                 </span>
               )}
             </div>
-            <button className="w-full bg-black text-white py-2 rounded hover:scale-101 transition cursor-pointer">
-              Sign Up
+            <button className="w-full bg-black text-white py-2 rounded hover:scale-103 transition cursor-pointer">
+              সাইন আপ করুন
             </button>
           </form>
           <div className="text-center">
-            <span>Already have an account? </span>
+            <span>ইতিমধ্যে একটি অ্যাকাউন্ট আছে? </span>
             <Link to="/login" className="text-white underline">
-              Login
+              লগইন করুন
             </Link>
           </div>
         </div>

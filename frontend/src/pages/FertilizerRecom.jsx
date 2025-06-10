@@ -80,7 +80,7 @@ const FertilizerRecom = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Home
+            হোম
           </NavLink>
           <NavLink
             to="/about"
@@ -88,7 +88,7 @@ const FertilizerRecom = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            About
+            সম্পর্কে
           </NavLink>
           <NavLink
             to="/contact"
@@ -96,13 +96,13 @@ const FertilizerRecom = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Contact
+            যোগাযোগ
           </NavLink>
           <button
             onClick={handleLogout}
             className="w-[100px] h-[45px] border-2 border-black rounded-md text-black font-medium hover:bg-green-500 hover:text-white hover:border-green-500 transition flex items-center justify-center cursor-pointer"
           >
-            Logout
+            লগআউট
           </button>
         </nav>
 
@@ -127,19 +127,19 @@ const FertilizerRecom = () => {
             </summary>
             <div className="absolute -right-25 mt-2 w-75 h-250 bg-white shadow-md rounded-md p-8 z-50 space-y-10">
               <NavLink to="/" className="block text-black font-medium">
-                Home
+                হোম
               </NavLink>
               <NavLink to="/about" className="block text-black font-medium">
-                About
+                সম্পর্কে
               </NavLink>
               <NavLink to="/contact" className="block text-black font-medium">
-                Contact
+                যোগাযোগ
               </NavLink>
               <button
                 onClick={handleLogout}
                 className="w-[150px] h-[45px] border-2 border-black rounded-md text-black font-medium py-2 hover:bg-green-500 hover:text-white hover:border-green-500 transition"
               >
-                Logout
+                লগআউট
               </button>
             </div>
           </details>
@@ -149,11 +149,11 @@ const FertilizerRecom = () => {
       <div className="fixed inset-0 flex justify-center items-start overflow-y-auto px-4 py-6 sm:py-10">
         <div className="bg-green-500/50 border-2 rounded-xl backdrop-blur-[20px] p-6 sm:p-8 md:p-10 w-full max-w-xl mt-[14vh]">
           <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center">
-            Fertilizer Recommendation
+            সার প্রস্তাব
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-black font-medium">Crop Name</label>
+              <label className="block text-black font-medium">ফসলের নাম</label>
               <input
                 type="text"
                 required
@@ -165,14 +165,14 @@ const FertilizerRecom = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 rounded hover:scale-101 transition cursor-pointer"
+              className="w-full bg-black text-white py-2 rounded hover:scale-103 transition cursor-pointer"
             >
-              Get Recommendations
+              প্রস্তাব পান
             </button>
           </form>
           {fertilizer && (
             <div className="mt-4 text-center text-lg font-semibold text-black">
-              Recommended Fertilizer: {fertilizer}
+              প্রস্তাবিত সার: {fertilizer}
             </div>
           )}
         </div>

@@ -18,15 +18,15 @@ const Login = () => {
     let error = {};
 
     if (!values.email) {
-      error.email = "Email is required.";
+      error.email = "ইমেল প্রয়োজন|";
     } else if (!email_pattern.test(values.email)) {
-      error.email = "User doesn't exist!";
+      error.email = "ব্যবহারকারীর অস্তিত্ব নেই!";
     }
 
     if (!values.password) {
-      error.password = "Password is required.";
+      error.password = "পাসওয়ার্ড প্রয়োজন|";
     } else if (!password_pattern.test(values.password)) {
-      error.password = "Incorrect password.";
+      error.password = "ভুল পাসওয়ার্ড|";
     }
     return error;
   };
@@ -82,15 +82,15 @@ const Login = () => {
 
       <div className="fixed inset-0 flex justify-center items-start mt-[17vh]">
         <div className="shadow-2xl px-8 py-5 w-96 bg-green-500/50 backdrop-blur-[20px] rounded-[10px] border-2">
-          <h2 className="text-3xl font-bold mb-4 text-center">Login</h2>
+          <h2 className="text-3xl font-bold mb-4 text-center">লগইন করুন</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-black font-medium">
-                Email
+                ইমেইল
               </label>
               <input
                 type="email"
-                placeholder="Enter email"
+                placeholder="ইমেইল লিখুন"
                 className="w-full px-3 py-2 border bg-white rounded"
                 name="email"
                 onChange={handleChanges}
@@ -106,11 +106,11 @@ const Login = () => {
                 htmlFor="password"
                 className="block text-black font-medium"
               >
-                Password
+                পাসওয়ার্ড
               </label>
               <input
                 type="password"
-                placeholder="Enter password"
+                placeholder="পাসওয়ার্ড লিখুন"
                 className="w-full px-3 py-2 border bg-white rounded"
                 name="password"
                 onChange={handleChanges}
@@ -121,14 +121,14 @@ const Login = () => {
                 </span>
               )}
             </div>
-            <button className="w-full bg-black text-white py-2 rounded hover:scale-101 transition cursor-pointer">
-              Sign In
+            <button className="w-full bg-black text-white py-2 rounded hover:scale-103 transition cursor-pointer">
+              সাইন ইন করুন
             </button>
           </form>
           <div className="text-center">
-            <span>Don't have an account? </span>
+            <span>কোন অ্যাকাউন্ট নেই? </span>
             <Link to="/register" className="text-white underline">
-              Register
+              নিবন্ধন করুন
             </Link>
           </div>
         </div>

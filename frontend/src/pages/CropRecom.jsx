@@ -91,7 +91,7 @@ const CropRecom = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Home
+            হোম
           </NavLink>
           <NavLink
             to="/about"
@@ -99,7 +99,7 @@ const CropRecom = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            About
+            সম্পর্কে
           </NavLink>
           <NavLink
             to="/contact"
@@ -107,13 +107,13 @@ const CropRecom = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Contact
+            যোগাযোগ
           </NavLink>
           <button
             onClick={handleLogout}
             className="w-[100px] h-[45px] border-2 border-black rounded-md text-black font-medium hover:bg-green-500 hover:text-white hover:border-green-500 transition flex items-center justify-center cursor-pointer"
           >
-            Logout
+            লগআউট
           </button>
         </nav>
 
@@ -138,19 +138,19 @@ const CropRecom = () => {
             </summary>
             <div className="absolute -right-25 mt-2 w-75 h-250 bg-white shadow-md rounded-md p-8 z-50 space-y-10">
               <NavLink to="/" className="block text-black font-medium">
-                Home
+                হোম
               </NavLink>
               <NavLink to="/about" className="block text-black font-medium">
-                About
+                সম্পর্কে
               </NavLink>
               <NavLink to="/contact" className="block text-black font-medium">
-                Contact
+                যোগাযোগ
               </NavLink>
               <button
                 onClick={handleLogout}
                 className="w-[150px] h-[45px] border-2 border-black rounded-md text-black font-medium py-2 hover:bg-green-500 hover:text-white hover:border-green-500 transition"
               >
-                Logout
+                লগআউট
               </button>
             </div>
           </details>
@@ -160,13 +160,13 @@ const CropRecom = () => {
       <div className="fixed inset-0 flex justify-center items-start overflow-y-auto px-2 sm:px-4 py-4 sm:py-10 mt-[-4vh]">
         <div className="bg-green-500/50 border-2 rounded-xl backdrop-blur-[20px] p-3 sm:p-6 md:p-10 w-full max-w-xl mt-[14vh]">
           <h2 className="text-xl sm:text-3xl font-bold mb-4 text-center">
-            Crop Recommendation
+            ফসল প্রস্তাব
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  Nitrogen (N)
+                  নাইট্রোজেন (N)
                 </label>
                 <input
                   type="number"
@@ -179,7 +179,7 @@ const CropRecom = () => {
               </div>
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  Phosphorus (P)
+                  ফসফরাস (P)
                 </label>
                 <input
                   type="number"
@@ -192,7 +192,7 @@ const CropRecom = () => {
               </div>
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  Potassium (K)
+                  পটাসিয়াম (K)
                 </label>
                 <input
                   type="number"
@@ -205,7 +205,7 @@ const CropRecom = () => {
               </div>
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  pH Level
+                  পিএইচ স্তর (pH)
                 </label>
                 <input
                   type="number"
@@ -218,7 +218,7 @@ const CropRecom = () => {
               </div>
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  Humidity (%)
+                  আর্দ্রতা (%)
                 </label>
                 <input
                   type="number"
@@ -231,7 +231,7 @@ const CropRecom = () => {
               </div>
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  Temperature (℃)
+                  তাপমাত্রা (℃)
                 </label>
                 <input
                   type="number"
@@ -245,14 +245,14 @@ const CropRecom = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 text-sm sm:text-base rounded hover:scale-101 transition cursor-pointer"
+              className="w-full bg-black text-white py-2 text-sm sm:text-base rounded hover:scale-103 transition cursor-pointer"
             >
-              Get Recommendations
+              প্রস্তাব পান
             </button>
           </form>
           {recommendation.length > 0 && (
             <div className="mt-4 text-start text-lg font-semibold text-black">
-              Recommended Crops:
+              প্রস্তাবিত ফসল:
               <ul className="mt-2 list-disc list-inside text-base font-normal">
                 {recommendation.map((crop, index) => (
                   <li key={index}>{crop}</li>

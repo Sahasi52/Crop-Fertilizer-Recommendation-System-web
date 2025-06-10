@@ -64,7 +64,7 @@ const Home = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Home
+            হোম
           </NavLink>
           <NavLink
             to="/about"
@@ -72,7 +72,7 @@ const Home = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            About
+            সম্পর্কে
           </NavLink>
           <NavLink
             to="/contact"
@@ -80,13 +80,13 @@ const Home = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Contact
+            যোগাযোগ
           </NavLink>
           <button
             onClick={handleLogout}
             className="w-[100px] h-[45px] border-2 border-black rounded-md text-black font-medium hover:bg-green-500 hover:text-white hover:border-green-500 transition flex items-center justify-center cursor-pointer"
           >
-            Logout
+            লগআউট
           </button>
         </nav>
 
@@ -111,19 +111,19 @@ const Home = () => {
             </summary>
             <div className="absolute -right-25 mt-2 w-75 h-250 bg-white shadow-md rounded-md p-8 z-50 space-y-10">
               <NavLink to="/" className="block text-black font-medium">
-                Home
+                হোম
               </NavLink>
               <NavLink to="/about" className="block text-black font-medium">
-                About
+                সম্পর্কে
               </NavLink>
               <NavLink to="/contact" className="block text-black font-medium">
-                Contact
+                যোগাযোগ
               </NavLink>
               <button
                 onClick={handleLogout}
                 className="w-[150px] h-[45px] border-2 border-black rounded-md text-black font-medium py-2 hover:bg-green-500 hover:text-white hover:border-green-500 transition"
               >
-                Logout
+                লগআউট
               </button>
             </div>
           </details>
@@ -132,31 +132,33 @@ const Home = () => {
 
       <section className="absolute mt-[15vh] w-full px-8 md:px-[40px] flex flex-col items-start justify-center">
         <h1 className="text-[2rem] md:text-[2.8rem] leading-[40px] md:leading-[60px] text-white font-bold">
-          Welcome to AgriSense
+          এগ্রিসেন্স-এ স্বাগতম।
         </h1>
         <p className="text-white text-sm md:text-base pb-4 md:pb-6">
-          A Data-Driven Solution For Smart Farming
+          স্মার্ট কৃষিকাজের জন্য একটি ডেটা-চালিত সমাধান
         </p>
-        <div className="flex justify-center self-center mb-4 flex-wrap gap-4">
-          <Link
-            to="/crop_recommendation"
-            className="px-[30px] py-[25px] md:px-[50px] md:py-[35px] m-[20px] md:m-[75px] bg-green-500/50 backdrop-blur-[20px] rounded-[10px] shadow text-black font-medium text-sm md:text-base hover:scale-105 hover:bg-white/50 transition border-2"
-          >
-            Crop
-            <br />
-            Recommendation
-          </Link>
-          <Link
-            to="/fertilizer_recommendation"
-            className="px-[30px] py-[25px] md:px-[50px] md:py-[35px] m-[20px] md:m-[75px] bg-green-500/50 backdrop-blur-[20px] rounded-[10px] shadow text-black font-medium text-sm md:text-base hover:scale-105 hover:bg-white/50 transition border-2"
-          >
-            Fertilizer
-            <br />
-            Recommendation
-          </Link>
+        <div className="flex justify-center self-center m-8 flex-wrap gap-6 px-4 py-8">
+          <div className="flex flex-col items-center bg-green-500/50 backdrop-blur-[20px] rounded-xl border-2 p-5 w-full max-w-[300px] sm:w-[300px]">
+            <h2 className="text-lg font-bold mb-3 text-center">ফসল প্রস্তাব</h2>
+            <Link
+              to="/crop_recommendation"
+              className="bg-black text-white text-sm font-medium rounded px-6 py-3 hover:scale-105 transition"
+            >
+              এগিয়ে যান
+            </Link>
+          </div>
+          <div className="flex flex-col items-center bg-green-500/50 backdrop-blur-[20px] rounded-xl border-2 p-5 w-full max-w-[300px] sm:w-[300px]">
+            <h2 className="text-lg font-bold mb-3 text-center">সার প্রস্তাব</h2>
+            <Link
+              to="/fertilizer_recommendation"
+              className="bg-black text-white text-sm font-medium rounded px-6 py-3 hover:scale-105 transition"
+            >
+              এগিয়ে যান
+            </Link>
+          </div>
         </div>
         <h4 className="text-white text-sm md:text-lg self-center italic font-bold">
-          Empowering Farmers with Precision and Insight.....
+          নির্ভুলতা এবং অন্তর্দৃষ্টি দিয়ে কৃষকদের ক্ষমতায়ন করা.....
         </h4>
       </section>
     </div>

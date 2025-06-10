@@ -58,7 +58,7 @@ const About = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Home
+            হোম
           </NavLink>
           <NavLink
             to="/about"
@@ -66,7 +66,7 @@ const About = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            About
+            সম্পর্কে
           </NavLink>
           <NavLink
             to="/contact"
@@ -74,13 +74,13 @@ const About = () => {
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
           >
-            Contact
+            যোগাযোগ
           </NavLink>
           <button
             onClick={handleLogout}
             className="w-[100px] h-[45px] border-2 border-black rounded-md text-black font-medium hover:bg-green-500 hover:text-white hover:border-green-500 transition flex items-center justify-center cursor-pointer"
           >
-            Logout
+            লগআউট
           </button>
         </nav>
 
@@ -105,19 +105,19 @@ const About = () => {
             </summary>
             <div className="absolute -right-25 mt-2 w-75 h-250 bg-white shadow-md rounded-md p-8 z-50 space-y-10">
               <NavLink to="/" className="block text-black font-medium">
-                Home
+                হোম
               </NavLink>
               <NavLink to="/about" className="block text-black font-medium">
-                About
+                সম্পর্কে
               </NavLink>
               <NavLink to="/contact" className="block text-black font-medium">
-                Contact
+                যোগাযোগ
               </NavLink>
               <button
                 onClick={handleLogout}
                 className="w-[150px] h-[45px] border-2 border-black rounded-md text-black font-medium py-2 hover:bg-green-500 hover:text-white hover:border-green-500 transition"
               >
-                Logout
+                লগআউট
               </button>
             </div>
           </details>
@@ -127,34 +127,32 @@ const About = () => {
       <div className="fixed inset-0 flex justify-center items-start overflow-y-auto px-4 py-6 sm:py-10 mt-[1vh]">
         <div className="relative mt-[14vh] w-full max-w-[800px] bg-green-500/50 border-2 rounded-xl backdrop-blur-[20px] p-6 sm:p-8 md:p-10 flex flex-col items-center mx-auto">
           <h2 className="text-xl sm:text-2xl leading-[54px] text-black font-bold text-center">
-            Who We Are?
+            আমরা কারা?
           </h2>
           <br />
           <p className="text-sm sm:text-base text-black m-0 text-justify">
-            Officia Lorem sint pariatur deserunt elit dolor nisi cillum
-            cupidatat incididunt voluptate. Ut in aliquip proident Lorem
-            exercitation. Consectetur exercitation anim tempor occaecat occaecat
-            enim qui dolore. Cupidatat pariatur proident deserunt exercitation
-            consequat occaecat sunt veniam culpa qui cillum. Velit minim mollit
-            sint veniam ex eiusmod. Excepteur ad amet eu sint reprehenderit amet
-            consequat qui. Sunt magna cillum amet fugiat adipisicing incididunt
-            incididunt esse.
+            অফিস Lorem মরুভূমি অভিজাত ব্যথা cillum যদি না জন্ম হয় মদন পতন
+            আনন্দ| কিছু ক্ষেত্রে যেমন Lorem ব্যায়াম কনসেক্টেতুর ব্যায়াম
+            ক্ষণস্থায়ী ওকাইক্যাট যার জন্য ব্যথা কিউপিডিটি মরুভূমির ব্যায়ামের
+            জন্ম পরিণাম occaecat হয় ক্ষমা দোষ যারা cillum| অন্তত নরম করতে চায়
+            যেমন থেকে ক্ষমা করা হয়| প্রেম eu ছাড়া প্রেম নিন্দা করা হয় ফলাফল
+            কে| মহৎ প্রেম কি অদম্য ঘটনা পলায়ন করে হতে ঘটবে|
           </p>
           <br />
           <abbr
             title=""
             className="text-sm sm:text-base text-black text-justify"
           >
-            Aliquip quis dolor enim duis aute culpa sint. Duis ullamco irure
-            magna velit. Sunt ea aliquip do do ex laboris veniam.
+            কোন না কোনভাবে যারা এখন দুজনের জন্য কষ্ট পাচ্ছে তারাই দোষী। দুজনেরই
+            কোন অহংকার মহান ইচ্ছাশক্তি। তারা কি কেউ কেউ দান করে শ্রম থেকে ক্ষমা
+            করে।
           </abbr>
           <br />
           <div className="w-full bg-white text-black whitespace-nowrap overflow-hidden animate-scroll-left mt-4">
             <p className="inline-block px-4 text-sm sm:text-base">
-              Do officia occaecat est fugiat pariatur ad ullamco in laboris
-              aute. Sint velit laborum irure dolor ea pariatur laboris veniam.
-              Consectetur fugiat pariatur Lorem pariatur. Ea velit Lorem sint
-              qui ex
+              দফতরে অন্ধ পলায়ন পরিয়াতুর উল্লামকোতে লেবারিস - aute Sint velit
+              laborum irure dolor ea pariatur laboris veniam| লোরেম প্যারিয়াতুর
+              পালাও - Ea velit Lorem sint - কে থেকে|
             </p>
           </div>
         </div>
