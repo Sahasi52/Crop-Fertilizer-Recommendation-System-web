@@ -126,9 +126,7 @@ const Contact = () => {
 
       <div className="fixed inset-0 flex justify-center items-start px-4 py-6 sm:py-10 mt-[-1vh]">
         <div className="relative mt-[14vh] w-full max-w-[400px] h-auto sm:h-[90%] max-h-[440px] bg-green-500/50 border-2 rounded-xl backdrop-blur-[20px] p-6 sm:p-10 flex flex-col items-center justify-center">
-          <h6 className="text-xs text-black font-semibold">
-            আমাদের ইনবক্স করুন
-          </h6>
+          <h6 className="text-xs text-black font-semibold">ইনবক্স করুন</h6>
           <h3 className="text-[1.3rem] sm:text-[1.62rem] leading-[30px] sm:leading-[35px] py-2 text-black font-bold text-center">
             যেকোনো ধরণের অনুসন্ধানের জন্য...
           </h3>
