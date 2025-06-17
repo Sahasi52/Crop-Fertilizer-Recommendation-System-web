@@ -6,6 +6,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import CropRecom from "./pages/CropRecom";
 import FertilizerRecom from "./pages/FertilizerRecom";
+import Admin from "./pages/Admin";
+import AddUser from "./pages/AddUser";
+import UpdateUser from "./pages/UpdateUser";
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
           path="/fertilizer_recommendation"
           element={<FertilizerRecom />}
         ></Route>
+        <Route path="/admin" element={<Admin />}></Route>
+        <Route path="/add" element={<AddUser />}></Route>
+        <Route path="/update/:id" element={<UpdateUser />}></Route>
       </Routes>
     </BrowserRouter>
   );

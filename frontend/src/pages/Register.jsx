@@ -54,7 +54,14 @@ const Register = () => {
         navigate("/login");
       }
     } catch (err) {
-      console.log(err.message);
+      const message = err?.response?.data?.message;
+      let error = {};
+      if (message === "User already exists!") {
+        error.email = "ব্যবহারকারী ইতিমধ্যেই আছেন!";
+      } else {
+        console.log(err.message);
+      }
+      setErrors(error);
     }
   };
   useEffect(() => {
@@ -76,7 +83,7 @@ const Register = () => {
       <header className="fixed w-full bg-white py-1 flex items-center justify-around">
         <a href="/">
           <img
-            src="logo.jpeg"
+            src="/logo.jpeg"
             alt="logo"
             className="h-[60px] w-[100px] select-none"
           />

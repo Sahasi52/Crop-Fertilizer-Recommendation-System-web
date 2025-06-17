@@ -11,22 +11,13 @@ const Login = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
-  const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-
   const validation = (values) => {
     let error = {};
-
     if (!values.email) {
       error.email = "ইমেল প্রয়োজন|";
-    } else if (!email_pattern.test(values.email)) {
-      error.email = "ব্যবহারকারীর অস্তিত্ব নেই!";
     }
-
     if (!values.password) {
       error.password = "পাসওয়ার্ড প্রয়োজন|";
-    } else if (!password_pattern.test(values.password)) {
-      error.password = "ভুল পাসওয়ার্ড|";
     }
     return error;
   };
@@ -51,7 +42,16 @@ const Login = () => {
         navigate("/login");
       }
     } catch (err) {
-      console.log(err.message);
+      const message = err?.response?.data?.message;
+      let error = {};
+      if (message === "User doesn't exist!") {
+        error.email = "ব্যবহারকারীর অস্তিত্ব নেই!";
+      } else if (message === "Incorrect password.") {
+        error.password = "ভুল পাসওয়ার্ড|";
+      } else {
+        console.log(err.message);
+      }
+      setErrors(error);
     }
   };
   useEffect(() => {
@@ -73,7 +73,7 @@ const Login = () => {
       <header className="fixed w-full bg-white py-1 flex items-center justify-around">
         <a href="/">
           <img
-            src="logo.jpeg"
+            src="/logo.jpeg"
             alt="logo"
             className="h-[60px] w-[100px] select-none"
           />

@@ -38,10 +38,12 @@ router.post("/login", async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({ message: "User doesn't exist!" });
     }
+
     const isMatch = await bcrypt.compare(password, rows[0].password);
     if (!isMatch) {
       return res.status(401).json({ message: "Incorrect password." });
     }
+
     const token = jwt.sign({ id: rows[0].id }, process.env.JWT_KEY, {
       expiresIn: "7d",
     });
@@ -55,7 +57,6 @@ router.post("/login", async (req, res) => {
 router.post("/crop_recommendation", async (req, res) => {
   const { nitrogen, phosphorus, potassium, ph_level, humidity, temperature } =
     req.body;
-
   if (
     [nitrogen, phosphorus, potassium, ph_level, humidity, temperature].some(
       (v) => v === undefined
@@ -66,7 +67,6 @@ router.post("/crop_recommendation", async (req, res) => {
 
   try {
     const db = await connectToDatabase();
-
     const [rows] = await db.query(
       `
       SELECT name,
@@ -82,21 +82,20 @@ router.post("/crop_recommendation", async (req, res) => {
     `,
       [nitrogen, phosphorus, potassium, ph_level, humidity, temperature]
     );
-
     if (rows.length === 0) {
       return res.status(404).json({ message: "No suitable crops found." });
     }
 
     const recommendedCrops = rows.map((row) => row.name);
+
     res.status(200).json({ recommendations: recommendedCrops });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json(err.message);
   }
 });
 
 router.post("/fertilizer_recommendation", async (req, res) => {
   const { crop_name } = req.body;
-
   if (!crop_name) {
     return res.status(400).json({ message: "Crop name is required." });
   }
@@ -116,7 +115,64 @@ router.post("/fertilizer_recommendation", async (req, res) => {
 
     res.status(200).json({ recommendation: rows[0].recommendation });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json(err.message);
+  }
+});
+
+router.post("/add", async (req, res) => {
+  const { username, email, password } = req.body;
+  try {
+    const db = await connectToDatabase();
+    const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
+    if (rows.length > 0) {
+      return res.status(409).json({ message: "User already exists!" });
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+    await db.query(
+      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+      [username, email, hashPassword]
+    );
+
+    return res.status(201).json({ message: "User created successfully." });
+  } catch (err) {
+    return res.status(500).json(err.message);
+  }
+});
+
+router.put("/update/:id", async (req, res) => {
+  const { username, email, password } = req.body;
+  const id = req.params.id;
+  try {
+    const db = await connectToDatabase();
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    const user = rows[0];
+    let hashPassword = user.password;
+    if (password && password.trim() !== "") {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (isMatch) {
+        return res.status(400).json({
+          message: "Please use a different password.",
+        });
+      }
+
+      hashPassword = await bcrypt.hash(password, 10);
+    }
+
+    await db.query(
+      "UPDATE users SET `username` = ?, `email` = ?, `password` = ? WHERE id = ?",
+      [username, email, hashPassword, id]
+    );
+
+    return res.status(201).json({ message: "User updated successfully." });
+  } catch (err) {
+    return res.status(500).json(err.message);
   }
 });
 
@@ -126,8 +182,10 @@ const verifyToken = async (req, res, next) => {
     if (!token) {
       return res.status(403).json({ message: "No token provided." });
     }
+
     const decoded = jwt.verify(token, process.env.JWT_KEY);
     req.userId = decoded.id;
+
     next();
   } catch (err) {
     return res.status(500).json({ message: "Server error." });
@@ -211,6 +269,89 @@ router.get("/fertilizer_recommendation", verifyToken, async (req, res) => {
     return res.status(201).json({ user: rows[0] });
   } catch (err) {
     return res.status(500).json({ message: "Server error." });
+  }
+});
+
+router.get("/admin", verifyToken, async (req, res) => {
+  try {
+    const db = await connectToDatabase();
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [
+      req.userId,
+    ]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    const user = rows[0];
+    if (user.email !== "admin@gmail.com") {
+      return res.status(403).json({ message: "Unauthorized!" });
+    }
+
+    const [cols] = await db.query("SELECT * FROM users");
+    return res.status(200).json(cols);
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token." });
+  }
+});
+
+router.get("/add", verifyToken, async (req, res) => {
+  try {
+    const db = await connectToDatabase();
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [
+      req.userId,
+    ]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    const user = rows[0];
+    if (user.email !== "admin@gmail.com") {
+      return res.status(403).json({ message: "Unauthorized!" });
+    }
+
+    const [cols] = await db.query("SELECT * FROM users");
+    return res.status(200).json(cols);
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token." });
+  }
+});
+
+router.get("/update/:id", verifyToken, async (req, res) => {
+  try {
+    const db = await connectToDatabase();
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [
+      req.userId,
+    ]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    const user = rows[0];
+    if (user.email !== "admin@gmail.com") {
+      return res.status(403).json({ message: "Unauthorized!" });
+    }
+
+    const id = parseInt(req.params.id);
+    const [cols] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
+
+    return res.json(cols[0]);
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token." });
+  }
+});
+
+router.delete("/admin/:id", verifyToken, async (req, res) => {
+  const id = req.params.id;
+  try {
+    const db = await connectToDatabase();
+    const [row] = await db.query("DELETE FROM users WHERE id = ?", [id]);
+
+    return res.status(201).json({ message: "User deleted successfully." });
+  } catch (err) {
+    return res.status(500).json(err.message);
   }
 });
 

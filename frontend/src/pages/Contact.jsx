@@ -45,7 +45,7 @@ const Contact = () => {
       <header className="fixed top-0 left-0 w-full z-[99] bg-white px-4 md:px-24 py-2 flex items-center justify-between">
         <Link to="/">
           <img
-            src="logo.jpeg"
+            src="/logo.jpeg"
             alt="logo"
             className="h-[50px] w-[80px] select-none"
           />
