@@ -10,15 +10,16 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-
   const validation = (values) => {
     let error = {};
     if (!values.email) {
       error.email = "ইমেল প্রয়োজন|";
     }
+
     if (!values.password) {
       error.password = "পাসওয়ার্ড প্রয়োজন|";
     }
+
     return error;
   };
   const handleChanges = (e) => {
@@ -28,18 +29,19 @@ const Login = () => {
     e.preventDefault();
     const validationErrors = validation(values);
     setErrors(validationErrors);
-
     if (Object.keys(validationErrors).length > 0) return;
+
     try {
       const response = await axios.post(
         "http://localhost:3000/auth/login",
         values
       );
-      if (response.status === 201) {
+      if (values.email === "admin@gmail.com") {
+        localStorage.setItem("token", response.data.token);
+        navigate("/admin");
+      } else {
         localStorage.setItem("token", response.data.token);
         navigate("/");
-      } else {
-        navigate("/login");
       }
     } catch (err) {
       const message = err?.response?.data?.message;
@@ -60,6 +62,7 @@ const Login = () => {
       navigate("/", { replace: true });
     }
   }, []);
+
   return (
     <div
       style={{
@@ -79,7 +82,6 @@ const Login = () => {
           />
         </a>
       </header>
-
       <div className="fixed inset-0 flex justify-center items-start mt-[17vh]">
         <div className="shadow-2xl px-8 py-5 w-96 bg-green-500/50 backdrop-blur-[20px] rounded-[10px] border-2">
           <h2 className="text-3xl font-bold mb-4 text-center">লগইন করুন</h2>

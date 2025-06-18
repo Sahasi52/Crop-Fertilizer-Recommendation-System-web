@@ -7,7 +7,6 @@ const Admin = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const fetchUsers = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -21,20 +20,18 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
       setUsers(response.data);
       setLoading(false);
     } catch (err) {
       const message = err?.response?.data?.message;
       if (message === "Unauthorized!") {
-        navigate("/home");
+        navigate("/");
       } else {
         navigate("/login");
       }
       console.log(err);
     }
   };
-
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -51,7 +48,6 @@ const Admin = () => {
       console.log(err);
     }
   };
-
   if (loading)
     return (
       <p className="text-white text-center mt-20 text-lg sm:text-xl">
@@ -78,7 +74,6 @@ const Admin = () => {
           />
         </a>
       </header>
-
       <div className="fixed inset-0 flex justify-center items-start pt-[17vh] px-4 sm:px-0">
         <div className="w-full sm:w-[90vw] max-w-6xl bg-green-500/50 backdrop-blur-[20px] rounded-[10px] border-2 p-4 sm:p-6 overflow-auto">
           <Link
@@ -87,7 +82,6 @@ const Admin = () => {
           >
             Add +
           </Link>
-
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white rounded text-left text-sm sm:text-base">
               <thead>

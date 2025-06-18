@@ -11,13 +11,10 @@ const Register = () => {
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-
   const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-
   const validation = (values) => {
     let error = {};
-
     if (!values.username) {
       error.username = "নাম আবশ্যক|";
     }
@@ -43,8 +40,8 @@ const Register = () => {
     e.preventDefault();
     const validationErrors = validation(values);
     setErrors(validationErrors);
-
     if (Object.keys(validationErrors).length > 0) return;
+
     try {
       const response = await axios.post(
         "http://localhost:3000/auth/register",
@@ -70,6 +67,7 @@ const Register = () => {
       navigate("/", { replace: true });
     }
   }, []);
+
   return (
     <div
       style={{
@@ -89,7 +87,6 @@ const Register = () => {
           />
         </a>
       </header>
-
       <div className="fixed inset-0 flex justify-center items-start mt-[17vh]">
         <div className="shadow-2xl px-8 py-5 w-96 bg-green-500/50 backdrop-blur-[20px] rounded-[10px] border-2">
           <h2 className="text-3xl font-bold mb-4 text-center">নিবন্ধন করুন</h2>

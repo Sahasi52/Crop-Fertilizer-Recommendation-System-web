@@ -21,22 +21,18 @@ const Home = () => {
       console.log(err);
     }
   };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-
   useEffect(() => {
     fetchUser();
   }, []);
 
   const navLinkBase =
     "relative text-black font-medium hover:text-green-500 after:absolute after:left-0 after:-bottom-1.5 after:h-[3px] after:w-full after:bg-green-500 after:rounded-md after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-right hover:after:origin-left transition";
-
   const activeStyle =
     "text-green-500 after:absolute after:left-0 after:-bottom-1.5 after:h-[3px] after:w-full after:bg-green-500 after:rounded-md after:scale-x-100";
-
   return (
     <div
       style={{
@@ -88,7 +84,6 @@ const Home = () => {
             লগআউট
           </button>
         </nav>
-
         {/* Mobile/Tablet Hamburger Menu */}
         <div className="lg:hidden relative">
           <details className="relative">
@@ -128,7 +123,6 @@ const Home = () => {
           </details>
         </div>
       </header>
-
       <section className="absolute mt-[15vh] w-full px-8 md:px-[40px] flex flex-col items-start justify-center">
         <h1 className="text-[2rem] md:text-[2.8rem] leading-[40px] md:leading-[60px] text-white font-bold">
           এগ্রিসেন্স-এ স্বাগতম।

@@ -11,5 +11,6 @@ export const connectToDatabase = async () => {
       database: process.env.DB_NAME,
     });
   }
+
   return connection;
 };

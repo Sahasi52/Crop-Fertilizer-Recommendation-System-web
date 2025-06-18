@@ -47,7 +47,6 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: rows[0].id }, process.env.JWT_KEY, {
       expiresIn: "7d",
     });
-
     return res.status(201).json({ token: token });
   } catch (err) {
     res.status(500).json(err.message);
@@ -87,7 +86,6 @@ router.post("/crop_recommendation", async (req, res) => {
     }
 
     const recommendedCrops = rows.map((row) => row.name);
-
     res.status(200).json({ recommendations: recommendedCrops });
   } catch (err) {
     res.status(500).json(err.message);
@@ -106,7 +104,6 @@ router.post("/fertilizer_recommendation", async (req, res) => {
       "SELECT recommendation FROM fertilizers WHERE crop_name = ? LIMIT 1",
       [crop_name]
     );
-
     if (rows.length === 0) {
       return res
         .status(404)
@@ -161,7 +158,6 @@ router.put("/update/:id", async (req, res) => {
           message: "Please use a different password.",
         });
       }
-
       hashPassword = await bcrypt.hash(password, 10);
     }
 
@@ -185,7 +181,6 @@ const verifyToken = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_KEY);
     req.userId = decoded.id;
-
     next();
   } catch (err) {
     return res.status(500).json({ message: "Server error." });
@@ -278,7 +273,6 @@ router.get("/admin", verifyToken, async (req, res) => {
     const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [
       req.userId,
     ]);
-
     if (rows.length === 0) {
       return res.status(404).json({ message: "User not found!" });
     }
@@ -301,7 +295,6 @@ router.get("/add", verifyToken, async (req, res) => {
     const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [
       req.userId,
     ]);
-
     if (rows.length === 0) {
       return res.status(404).json({ message: "User not found!" });
     }
@@ -324,7 +317,6 @@ router.get("/update/:id", verifyToken, async (req, res) => {
     const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [
       req.userId,
     ]);
-
     if (rows.length === 0) {
       return res.status(404).json({ message: "User not found!" });
     }
@@ -336,7 +328,6 @@ router.get("/update/:id", verifyToken, async (req, res) => {
 
     const id = parseInt(req.params.id);
     const [cols] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
-
     return res.json(cols[0]);
   } catch (err) {
     return res.status(401).json({ message: "Invalid or expired token." });
@@ -348,7 +339,6 @@ router.delete("/admin/:id", verifyToken, async (req, res) => {
   try {
     const db = await connectToDatabase();
     const [row] = await db.query("DELETE FROM users WHERE id = ?", [id]);
-
     return res.status(201).json({ message: "User deleted successfully." });
   } catch (err) {
     return res.status(500).json(err.message);

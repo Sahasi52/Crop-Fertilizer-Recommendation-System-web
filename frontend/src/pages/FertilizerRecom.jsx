@@ -31,9 +31,9 @@ const FertilizerRecom = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   const [cropName, setCropName] = useState("");
   const [fertilizer, setFertilizer] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -105,7 +105,6 @@ const FertilizerRecom = () => {
             লগআউট
           </button>
         </nav>
-
         {/* Mobile/Tablet Hamburger Menu */}
         <div className="lg:hidden relative">
           <details className="relative">
@@ -145,7 +144,6 @@ const FertilizerRecom = () => {
           </details>
         </div>
       </header>
-
       <div className="fixed inset-0 flex justify-center items-start overflow-y-auto px-4 py-6 sm:py-10">
         <div className="bg-green-500/50 border-2 rounded-xl backdrop-blur-[20px] p-6 sm:p-8 md:p-10 w-full max-w-xl mt-[14vh]">
           <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center">

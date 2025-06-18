@@ -31,6 +31,7 @@ const CropRecom = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   const [formData, setFormData] = useState({
     nitrogen: "",
     phosphorus: "",
@@ -40,11 +41,9 @@ const CropRecom = () => {
     temperature: "",
   });
   const [recommendation, setRecommendation] = useState([]);
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -116,7 +115,6 @@ const CropRecom = () => {
             লগআউট
           </button>
         </nav>
-
         {/* Mobile/Tablet Hamburger Menu */}
         <div className="lg:hidden relative">
           <details className="relative">
@@ -156,7 +154,6 @@ const CropRecom = () => {
           </details>
         </div>
       </header>
-
       <div className="fixed inset-0 flex justify-center items-start overflow-y-auto px-2 sm:px-4 py-4 sm:py-10 mt-[-4vh]">
         <div className="bg-green-500/50 border-2 rounded-xl backdrop-blur-[20px] p-3 sm:p-6 md:p-10 w-full max-w-xl mt-[14vh]">
           <h2 className="text-xl sm:text-3xl font-bold mb-4 text-center">

@@ -28,6 +28,7 @@ const About = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   const navLinkBase =
     "relative text-black font-medium hover:text-green-500 after:absolute after:left-0 after:-bottom-1.5 after:h-[3px] after:w-full after:bg-green-500 after:rounded-md after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-right hover:after:origin-left transition";
   const activeStyle =
@@ -83,7 +84,6 @@ const About = () => {
             লগআউট
           </button>
         </nav>
-
         {/* Mobile/Tablet Hamburger Menu */}
         <div className="lg:hidden relative">
           <details className="relative">
@@ -123,7 +123,6 @@ const About = () => {
           </details>
         </div>
       </header>
-
       <div className="fixed inset-0 flex justify-center items-start overflow-y-auto px-4 py-6 sm:py-10 mt-[1vh]">
         <div className="relative mt-[14vh] w-full max-w-[800px] bg-green-500/50 border-2 rounded-xl backdrop-blur-[20px] p-6 sm:p-8 md:p-10 flex flex-col items-center mx-auto">
           <h2 className="text-xl sm:text-2xl leading-[54px] text-black font-bold text-center">

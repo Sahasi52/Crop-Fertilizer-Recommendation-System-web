@@ -12,30 +12,27 @@ const UpdateUser = () => {
   const { id } = useParams();
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
   const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-
   const validation = (values) => {
     let error = {};
     if (!values.username) {
       error.username = "Name is required.";
     }
+
     if (!password_pattern.test(values.password)) {
       error.password =
         "The password must contain 1 uppercase letter, 1 lowercase letter, 1 number and at least 8 characters.";
     }
+
     return error;
   };
-
   const handleChanges = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value.trim() });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validation(values);
     setErrors(validationErrors);
-
     if (Object.keys(validationErrors).length > 0) return;
 
     const updatePayload = { username: values.username, email: values.email };
@@ -60,7 +57,6 @@ const UpdateUser = () => {
       setErrors(error);
     }
   };
-
   const checkToken = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -77,7 +73,6 @@ const UpdateUser = () => {
           },
         }
       );
-
       setValues({
         username: response.data.username || "",
         email: response.data.email || "",
@@ -86,17 +81,17 @@ const UpdateUser = () => {
     } catch (err) {
       const message = err?.response?.data?.message;
       if (message === "Unauthorized!") {
-        navigate("/home");
+        navigate("/");
       } else {
         navigate("/login");
       }
       console.log(err);
     }
   };
-
   useEffect(() => {
     checkToken();
   }, []);
+
   return (
     <div
       style={{
@@ -116,13 +111,11 @@ const UpdateUser = () => {
           />
         </a>
       </header>
-
       <div className="fixed inset-0 flex justify-center items-start pt-[17vh] px-4 sm:px-0">
         <div className="w-full max-w-md bg-green-500/50 backdrop-blur-[20px] rounded-[10px] border-2 px-6 py-5 sm:px-8">
           <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-start text-black">
             Update User
           </h2>
-
           <form onSubmit={handleSubmit}>
             <div className="mb-2">
               <label className="block text-black font-medium">Username</label>
