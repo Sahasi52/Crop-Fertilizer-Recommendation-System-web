@@ -3,13 +3,16 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const CropRecom = () => {
   const navigate = useNavigate();
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:3000/auth/crop_recommendation",
+        `${API_BASE_URL}/auth/crop_recommendation`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,30 +39,35 @@ const CropRecom = () => {
     nitrogen: "",
     phosphorus: "",
     potassium: "",
-    ph_level: "",
-    humidity: "",
     temperature: "",
+    humidity: "",
+    ph_level: "",
   });
   const [recommendation, setRecommendation] = useState([]);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setRecommendation([]);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3000/auth/crop_recommendation",
+        `${API_BASE_URL}/auth/crop_recommendation`,
         formData,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-      setRecommendation(response.data.recommendations);
+      setRecommendation(response.data.recommendations || []);
     } catch (err) {
-      console.error(err);
+      alert("সুপারিশ পেতে ব্যর্থ হয়েছে");
+      console.error("Crop recommendation error:", err);
     }
   };
+
   const navLinkBase =
     "relative text-black font-medium hover:text-green-500 after:absolute after:left-0 after:-bottom-1.5 after:h-[3px] after:w-full after:bg-green-500 after:rounded-md after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-right hover:after:origin-left transition";
   const activeStyle =
@@ -85,7 +93,6 @@ const CropRecom = () => {
         <nav className="hidden lg:flex items-center space-x-10">
           <NavLink
             to="/"
-            end
             className={({ isActive }) =>
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
@@ -202,14 +209,14 @@ const CropRecom = () => {
               </div>
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  পিএইচ স্তর (pH)
+                  তাপমাত্রা (℃)
                 </label>
                 <input
                   type="number"
                   required
                   className="w-full px-2 py-1.5 sm:px-3 sm:py-2 border bg-white rounded text-sm sm:text-base"
-                  name="ph_level"
-                  value={formData.ph_level}
+                  name="temperature"
+                  value={formData.temperature}
                   onChange={handleChange}
                 />
               </div>
@@ -228,14 +235,14 @@ const CropRecom = () => {
               </div>
               <div className="mb-3 sm:mb-4">
                 <label className="block text-black text-sm sm:text-base font-medium">
-                  তাপমাত্রা (℃)
+                  পিএইচ স্তর (pH)
                 </label>
                 <input
                   type="number"
                   required
                   className="w-full px-2 py-1.5 sm:px-3 sm:py-2 border bg-white rounded text-sm sm:text-base"
-                  name="temperature"
-                  value={formData.temperature}
+                  name="ph_level"
+                  value={formData.ph_level}
                   onChange={handleChange}
                 />
               </div>
@@ -248,11 +255,14 @@ const CropRecom = () => {
             </button>
           </form>
           {recommendation.length > 0 && (
-            <div className="mt-4 text-start text-lg font-semibold text-black">
+            <div className="mt-4 text-center text-lg font-semibold text-black">
               প্রস্তাবিত ফসল:
               <ul className="mt-2 list-disc list-inside text-base font-normal">
-                {recommendation.map((crop, index) => (
-                  <li key={index}>{crop}</li>
+                {recommendation.map((rec, index) => (
+                  <li key={index}>
+                    {rec.crop} —{" "}
+                    <span className="text-black">{rec.probability}</span>
+                  </li>
                 ))}
               </ul>
             </div>

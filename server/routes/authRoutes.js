@@ -2,6 +2,7 @@ import express from "express";
 import { connectToDatabase } from "../lib/db.js";
 import bcrypt, { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
+import fetch from "node-fetch";
 
 const router = express.Router();
 
@@ -54,41 +55,46 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/crop_recommendation", async (req, res) => {
-  const { nitrogen, phosphorus, potassium, ph_level, humidity, temperature } =
+  const { nitrogen, phosphorus, potassium, temperature, humidity, ph_level } =
     req.body;
-  if (
-    [nitrogen, phosphorus, potassium, ph_level, humidity, temperature].some(
-      (v) => v === undefined
-    )
-  ) {
-    return res.status(400).json({ message: "All fields are required." });
-  }
 
   try {
-    const db = await connectToDatabase();
-    const [rows] = await db.query(
-      `
-      SELECT name,
-        POW((? - ((min_n + max_n)/2)), 2) +
-        POW((? - ((min_p + max_p)/2)), 2) +
-        POW((? - ((min_k + max_k)/2)), 2) +
-        POW((? - ((min_ph + max_ph)/2)), 2) +
-        POW((? - ((min_humidity + max_humidity)/2)), 2) +
-        POW((? - ((min_temp + max_temp)/2)), 2) AS score
-      FROM crops
-      ORDER BY score ASC
-      LIMIT 5
-    `,
-      [nitrogen, phosphorus, potassium, ph_level, humidity, temperature]
+    const mlResponse = await fetch(
+      "https://crop-recommendation-ml-backend-2.onrender.com/predict",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          N: nitrogen,
+          P: phosphorus,
+          K: potassium,
+          temperature: temperature,
+          humidity: humidity,
+          ph: ph_level,
+        }),
+      }
     );
-    if (rows.length === 0) {
-      return res.status(404).json({ message: "No suitable crops found." });
-    }
 
-    const recommendedCrops = rows.map((row) => row.name);
-    res.status(200).json({ recommendations: recommendedCrops });
+    const data = await mlResponse.json();
+
+    if (data.recommendations && Array.isArray(data.recommendations)) {
+      console.log("Recommended crops:", data.recommendations);
+
+      return res.status(200).json({
+        recommendations: data.recommendations.map((rec) => ({
+          crop: rec.crop,
+          probability: rec.probability.toFixed(2) + "%",
+        })),
+      });
+    } else {
+      return res.status(200).json({
+        recommendations: [],
+        message: "No recommendations found",
+      });
+    }
   } catch (err) {
-    res.status(500).json(err.message);
+    console.error("Error in crop recommendation:", err);
+    return res.status(500).json({ message: "Crop recommendation failed" });
   }
 });
 

@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const UpdateUser = () => {
   const [values, setValues] = useState({
     username: "",
@@ -40,7 +43,7 @@ const UpdateUser = () => {
 
     try {
       const response = await axios.put(
-        "http://localhost:3000/auth/update/" + id,
+        `${API_BASE_URL}/auth/update/` + id,
         updatePayload
       );
       if (response.status === 201) {
@@ -65,14 +68,11 @@ const UpdateUser = () => {
     }
 
     try {
-      const response = await axios.get(
-        "http://localhost:3000/auth/update/" + id,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${API_BASE_URL}/auth/update/` + id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setValues({
         username: response.data.username || "",
         email: response.data.email || "",

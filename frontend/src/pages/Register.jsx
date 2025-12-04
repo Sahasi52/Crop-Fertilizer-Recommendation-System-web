@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const Register = () => {
   const [values, setValues] = useState({
     username: "",
@@ -44,7 +47,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/register",
+        `${API_BASE_URL}/auth/register`,
         values
       );
       if (response.status === 201) {

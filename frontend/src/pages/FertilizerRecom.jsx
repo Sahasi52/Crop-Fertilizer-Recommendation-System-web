@@ -3,13 +3,16 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const FertilizerRecom = () => {
   const navigate = useNavigate();
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:3000/auth/fertilizer_recommendation",
+        `${API_BASE_URL}/auth/fertilizer_recommendation`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +42,7 @@ const FertilizerRecom = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3000/auth/fertilizer_recommendation",
+        `${API_BASE_URL}/auth/fertilizer_recommendation`,
         { crop_name: cropName },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -75,10 +78,11 @@ const FertilizerRecom = () => {
         <nav className="hidden lg:flex items-center space-x-10">
           <NavLink
             to="/"
-            end
+            id="home"
             className={({ isActive }) =>
               `${navLinkBase} ${isActive ? activeStyle : ""}`
             }
+            name="home"
           >
             হোম
           </NavLink>
@@ -153,17 +157,23 @@ const FertilizerRecom = () => {
             <div className="mb-4">
               <label className="block text-black font-medium">ফসলের নাম</label>
               <input
+                id="crop_name"
                 type="text"
                 required
                 className="w-full px-3 py-2 border bg-white rounded"
                 name="crop_name"
                 value={cropName}
-                onChange={(e) => setCropName(e.target.value)}
+                onChange={(e) => {
+                  setCropName(e.target.value);
+                  setFertilizer("");
+                }}
               />
             </div>
             <button
+              id="submit"
               type="submit"
               className="w-full bg-black text-white py-2 rounded hover:scale-103 transition cursor-pointer"
+              name="submit"
             >
               প্রস্তাব পান
             </button>

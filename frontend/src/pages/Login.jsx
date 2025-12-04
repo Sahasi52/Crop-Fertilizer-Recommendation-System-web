@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const Login = () => {
   const [values, setValues] = useState({
     email: "",
@@ -32,10 +35,7 @@ const Login = () => {
     if (Object.keys(validationErrors).length > 0) return;
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/login",
-        values
-      );
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, values);
       if (values.email === "admin@gmail.com") {
         localStorage.setItem("token", response.data.token);
         navigate("/admin");
@@ -91,6 +91,7 @@ const Login = () => {
                 ইমেইল
               </label>
               <input
+                id="email"
                 type="email"
                 placeholder="ইমেইল লিখুন"
                 className="w-full px-3 py-2 border bg-white rounded"
@@ -111,6 +112,7 @@ const Login = () => {
                 পাসওয়ার্ড
               </label>
               <input
+                id="password"
                 type="password"
                 placeholder="পাসওয়ার্ড লিখুন"
                 className="w-full px-3 py-2 border bg-white rounded"
@@ -123,7 +125,11 @@ const Login = () => {
                 </span>
               )}
             </div>
-            <button className="w-full bg-black text-white py-2 rounded hover:scale-103 transition cursor-pointer">
+            <button
+              id="signin"
+              className="w-full bg-black text-white py-2 rounded hover:scale-103 transition cursor-pointer"
+              name="signin"
+            >
               সাইন ইন করুন
             </button>
           </form>

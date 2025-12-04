@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const Admin = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -15,7 +18,7 @@ const Admin = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:3000/auth/admin", {
+      const response = await axios.get(`${API_BASE_URL}/auth/admin`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,7 +28,7 @@ const Admin = () => {
     } catch (err) {
       const message = err?.response?.data?.message;
       if (message === "Unauthorized!") {
-        navigate("/");
+        navigate("/admin");
       } else {
         navigate("/login");
       }
@@ -38,7 +41,7 @@ const Admin = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/auth/admin/${id}`, {
+      await axios.delete(`${API_BASE_URL}/auth/add/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

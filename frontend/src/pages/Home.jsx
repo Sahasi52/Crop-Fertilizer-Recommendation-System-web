@@ -3,12 +3,15 @@ import React, { useEffect } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const Home = () => {
   const navigate = useNavigate();
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:3000/auth/home", {
+      const response = await axios.get(`${API_BASE_URL}/auth/home`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -79,7 +82,9 @@ const Home = () => {
           </NavLink>
           <button
             onClick={handleLogout}
+            id="logout"
             className="w-[100px] h-[45px] border-2 border-black rounded-md text-black font-medium hover:bg-green-500 hover:text-white hover:border-green-500 transition flex items-center justify-center cursor-pointer"
+            name="logout"
           >
             লগআউট
           </button>
@@ -115,7 +120,9 @@ const Home = () => {
               </NavLink>
               <button
                 onClick={handleLogout}
+                id="logout"
                 className="w-[150px] h-[45px] border-2 border-black rounded-md text-black font-medium py-2 hover:bg-green-500 hover:text-white hover:border-green-500 transition"
+                name="logout"
               >
                 লগআউট
               </button>
@@ -135,7 +142,7 @@ const Home = () => {
             <h2 className="text-lg font-bold mb-3 text-center">ফসল প্রস্তাব</h2>
             <Link
               to="/crop_recommendation"
-              className="bg-black text-white text-sm font-medium rounded px-6 py-3 hover:scale-105 transition"
+              className="crop bg-black text-white text-sm font-medium rounded px-6 py-3 hover:scale-105 transition"
             >
               এগিয়ে যান
             </Link>
@@ -144,7 +151,9 @@ const Home = () => {
             <h2 className="text-lg font-bold mb-3 text-center">সার প্রস্তাব</h2>
             <Link
               to="/fertilizer_recommendation"
-              className="bg-black text-white text-sm font-medium rounded px-6 py-3 hover:scale-105 transition"
+              id="fertilizer"
+              className="fertilizer bg-black text-white text-sm font-medium rounded px-6 py-3 hover:scale-105 transition"
+              name="fertilizer"
             >
               এগিয়ে যান
             </Link>

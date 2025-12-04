@@ -3,12 +3,15 @@ import React, { useEffect } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import backgroundImage from "../assets/image.jpg";
 
+export const API_BASE_URL =
+  "https://crop-fertilizer-recommendation-system-web.onrender.com";
+
 const About = () => {
   const navigate = useNavigate();
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:3000/auth/about", {
+      const response = await axios.get(`${API_BASE_URL}/auth/about`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
