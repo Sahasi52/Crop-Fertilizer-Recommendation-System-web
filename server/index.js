@@ -3,6 +3,7 @@ import cors from "cors";
 import authRouter from "./routes/authRoutes.js";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
@@ -11,6 +12,6 @@ app.use(
 );
 app.use(express.json());
 app.use("/auth", authRouter);
-app.listen(process.env.PORT, () => {
-  console.log("Server is running...");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
