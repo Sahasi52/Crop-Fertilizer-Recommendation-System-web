@@ -17,7 +17,7 @@ const CropRecom = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       if (response.status !== 201) {
         navigate("/login");
@@ -59,7 +59,7 @@ const CropRecom = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       setRecommendation(response.data.recommendations || []);
     } catch (err) {

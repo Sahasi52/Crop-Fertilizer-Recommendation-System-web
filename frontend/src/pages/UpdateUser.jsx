@@ -44,7 +44,7 @@ const UpdateUser = () => {
     try {
       const response = await axios.put(
         `${API_BASE_URL}/auth/update/` + id,
-        updatePayload
+        updatePayload,
       );
       if (response.status === 201) {
         navigate("/admin");

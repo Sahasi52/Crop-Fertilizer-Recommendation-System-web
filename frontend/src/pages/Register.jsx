@@ -48,7 +48,7 @@ const Register = () => {
     try {
       const response = await axios.post(
         `${API_BASE_URL}/auth/register`,
-        values
+        values,
       );
       if (response.status === 201) {
         navigate("/login");

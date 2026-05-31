@@ -17,7 +17,7 @@ const FertilizerRecom = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       if (response.status !== 201) {
         navigate("/login");
@@ -35,22 +35,35 @@ const FertilizerRecom = () => {
     fetchUser();
   }, []);
 
-  const [cropName, setCropName] = useState("");
-  const [fertilizer, setFertilizer] = useState("");
+  const [formData, setFormData] = useState({
+    crop: "",
+    N: "",
+    P: "",
+    K: "",
+    temperature: "",
+    humidity: "",
+    ph: "",
+  });
+  const [recommendations, setRecommendations] = useState([]);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setRecommendations([]);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
         `${API_BASE_URL}/auth/fertilizer_recommendation`,
-        { crop_name: cropName },
+        formData,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
-      setFertilizer(response.data.recommendation);
+      setRecommendations(response.data.recommendations || []);
     } catch (err) {
-      console.error(err);
+      alert("সার প্রস্তাব পেতে ব্যর্থ হয়েছে");
+      console.error("Fertilizer recommendation error:", err);
     }
   };
   const navLinkBase =
@@ -154,33 +167,113 @@ const FertilizerRecom = () => {
             সার প্রস্তাব
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-black font-medium">ফসলের নাম</label>
-              <input
-                id="crop_name"
-                type="text"
-                required
-                className="w-full px-3 py-2 border bg-white rounded"
-                name="crop_name"
-                value={cropName}
-                onChange={(e) => {
-                  setCropName(e.target.value);
-                  setFertilizer("");
-                }}
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div>
+                <label className="block text-black font-medium">
+                  ফসলের নাম
+                </label>
+                <input
+                  type="text"
+                  required
+                  className="w-full px-3 py-2 border bg-white rounded"
+                  name="crop"
+                  value={formData.crop}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block text-black font-medium">
+                  নাইট্রোজেন (N)
+                </label>
+                <input
+                  type="number"
+                  required
+                  className="w-full px-3 py-2 border bg-white rounded"
+                  name="N"
+                  value={formData.N}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block text-black font-medium">
+                  ফসফরাস (P)
+                </label>
+                <input
+                  type="number"
+                  required
+                  className="w-full px-3 py-2 border bg-white rounded"
+                  name="P"
+                  value={formData.P}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block text-black font-medium">
+                  পটাসিয়াম (K)
+                </label>
+                <input
+                  type="number"
+                  required
+                  className="w-full px-3 py-2 border bg-white rounded"
+                  name="K"
+                  value={formData.K}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block text-black font-medium">
+                  তাপমাত্রা (℃)
+                </label>
+                <input
+                  type="number"
+                  required
+                  className="w-full px-3 py-2 border bg-white rounded"
+                  name="temperature"
+                  value={formData.temperature}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block text-black font-medium">
+                  আর্দ্রতা (%)
+                </label>
+                <input
+                  type="number"
+                  required
+                  className="w-full px-3 py-2 border bg-white rounded"
+                  name="humidity"
+                  value={formData.humidity}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-black font-medium">pH স্তর</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  required
+                  className="w-full px-3 py-2 border bg-white rounded"
+                  name="ph"
+                  value={formData.ph}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
             <button
-              id="submit"
               type="submit"
-              className="w-full bg-black text-white py-2 rounded hover:scale-103 transition cursor-pointer"
-              name="submit"
+              className="w-full bg-black text-white py-2 rounded hover:scale-103 transition"
             >
               প্রস্তাব পান
             </button>
           </form>
-          {fertilizer && (
+          {recommendations.length > 0 && (
             <div className="mt-4 text-center text-lg font-semibold text-black">
-              প্রস্তাবিত সার: {fertilizer}
+              প্রস্তাবিত সার:
+              <ul className="mt-2 list-disc list-inside text-base font-normal text-left">
+                {recommendations.map((rec, index) => (
+                  <li key={index}>{rec}</li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
