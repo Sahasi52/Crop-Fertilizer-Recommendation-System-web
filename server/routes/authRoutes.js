@@ -31,26 +31,37 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
   try {
-    const OldUser = await user.findOne({ email });
-    if (!OldUser) {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
+
+    const userData = await user.findOne({ email });
+
+    if (!userData) {
       return res.status(404).json({ message: "User doesn't exist!" });
     }
 
-    const isMatch = await bcrypt.compare(password, OldUser.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Incorrect password." });
+    if (!userData.password) {
+      return res.status(500).json({ message: "Corrupted user data" });
     }
 
-    const token = jwt.sign({ id: OldUser._id }, process.env.JWT_KEY, {
+    const isMatch = await bcrypt.compare(password, userData.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Incorrect password" });
+    }
+
+    const token = jwt.sign({ id: userData._id }, process.env.JWT_KEY, {
       expiresIn: "7d",
     });
 
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
   } catch (err) {
-    res.status(500).json(err.message);
+    console.log("LOGIN ERROR:", err);
+    return res.status(500).json({ message: err.message });
   }
 });
 
